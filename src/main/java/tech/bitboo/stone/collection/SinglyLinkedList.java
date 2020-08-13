@@ -1,4 +1,4 @@
-package tech.bitboo.stone;
+package tech.bitboo.stone.collection;
 
 public class SinglyLinkedList<T>
 {
