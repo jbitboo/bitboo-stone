@@ -2,6 +2,11 @@ package tech.bitboo.stone;
 
 import tech.bitboo.stone.exceptions.NonElementsException;
 
+import java.lang.reflect.Array;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.Objects;
+
 public class ArrayUtils
 {
     public static void reverse(byte[] values)
@@ -266,6 +271,52 @@ public class ArrayUtils
         for (int i = 0; i < values.length; i++)
         {
             result[i] = values[i];
+        }
+
+        return result;
+    }
+
+    /**
+     * <p>Sugar</p>
+     *
+     * <p>it's expected to be very slow!!</p>
+     *
+     * @param values
+     * @param tClass
+     * @param <Target>
+     * @param <Source>
+     * @return
+     * @throws NoSuchMethodException
+     * @throws InvocationTargetException
+     * @throws IllegalAccessException
+     */
+    public static <Target extends Number, Source extends Number> Target[] toObjects(Source[] values, Class<Target> tClass)
+    {
+        assert_non_null(values);
+
+        Target[] result = (Target[]) Array.newInstance(tClass, values.length);
+
+
+        Method method = null;
+
+        try
+        {
+            method = tClass.getMethod("valueOf", String.class);
+        }
+        catch (NoSuchMethodException ex)
+        {
+        }
+
+
+        for (int i = 0; i < values.length; i++)
+        {
+            try
+            {
+                result[i] = (Target) method.invoke(null, values[i].toString());
+            }
+            catch (ReflectiveOperationException ex)
+            {
+            }
         }
 
         return result;
