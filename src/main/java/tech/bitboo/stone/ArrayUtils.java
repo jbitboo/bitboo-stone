@@ -1,6 +1,8 @@
 package tech.bitboo.stone;
 
+import tech.bitboo.stone.annotations.Caution;
 import tech.bitboo.stone.exceptions.NonElementsException;
+
 import java.lang.reflect.Array;
 import java.lang.reflect.Method;
 
@@ -189,17 +191,7 @@ public class ArrayUtils
         return result;
     }
 
-    /**
-     * <p>Sugar</p>
-     *
-     * <p>it's expected to be very slow!!</p>
-     *
-     * @param values
-     * @param tClass
-     * @param <Target>
-     * @param <Source>
-     * @return
-     */
+    @Caution(description = "Sugar ,it's expected to be very slow!!")
     public static <Target extends Number, Source extends Number> Target[] toObjects(Source[] values, Class<Target> tClass)
     {
         assert_non_null(values);
